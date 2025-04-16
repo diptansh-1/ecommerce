@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 // DndProvider is now provided at the root level
 
@@ -27,6 +27,12 @@ const ProductsClient = ({
 }: ProductsClientProps) => {
   const [filteredProducts, setFilteredProducts] = useState<Product[]>(initialProducts);
   const [isLoading, setIsLoading] = useState(false);
+
+  // Use a ref to track the current URL to prevent infinite loops
+  const currentUrlRef = useRef<string>("");
+
+  // Use a ref to track if this is the first render
+  const isFirstRender = useRef(true);
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -43,6 +49,11 @@ const ProductsClient = ({
 
   // Initialize filters from URL params
   useEffect(() => {
+    // Set the current URL ref on first render
+    if (isFirstRender.current) {
+      currentUrlRef.current = window.location.search;
+      isFirstRender.current = false;
+    }
     if (initialCategory) {
       setCategory(initialCategory);
     }
@@ -66,8 +77,9 @@ const ProductsClient = ({
     }
   }, [initialCategory, searchParams, setCategory, setSearchQuery, setSortBy, setPriceRange, minPrice, maxPrice]);
 
-  // Apply filters and sorting
+  // Apply filters and sorting without updating URL
   useEffect(() => {
+
     setIsLoading(true);
 
     // Filter by category
@@ -108,7 +120,16 @@ const ProductsClient = ({
         result.sort((a, b) => a.id - b.id);
     }
 
-    // Update URL with filters
+    setFilteredProducts(result);
+    setIsLoading(false);
+  }, [category, priceRange, sortBy, searchQuery, initialProducts]);
+
+  // Separate effect for URL updates to prevent infinite loops
+  useEffect(() => {
+    // Skip the first render
+    if (isFirstRender.current) return;
+
+    // Build the new URL
     const params = new URLSearchParams();
     if (category) params.set("category", category);
     if (searchQuery) params.set("q", searchQuery);
@@ -117,11 +138,14 @@ const ProductsClient = ({
     if (priceRange[1] !== maxPrice) params.set("maxPrice", priceRange[1].toString());
 
     const newUrl = params.toString() ? `?${params.toString()}` : "";
-    router.push(`/products${newUrl}`, { scroll: false });
+    const fullNewUrl = `/products${newUrl}`;
 
-    setFilteredProducts(result);
-    setIsLoading(false);
-  }, [category, priceRange, sortBy, searchQuery, initialProducts, router, minPrice, maxPrice]);
+    // Only update if the URL has actually changed
+    if (currentUrlRef.current !== newUrl) {
+      currentUrlRef.current = newUrl;
+      router.push(fullNewUrl, { scroll: false });
+    }
+  }, [category, priceRange, sortBy, searchQuery, router, minPrice, maxPrice]);
 
   return (
     <>

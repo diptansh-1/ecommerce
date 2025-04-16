@@ -3,7 +3,7 @@
 import { ReactNode } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
+// No need for cn import as we're using template literals for class composition
 
 interface ButtonProps {
   children: ReactNode;
@@ -47,8 +47,8 @@ const Button = ({
   const normalizedSize = size === "sm" ? "small" : size === "md" ? "medium" : size === "lg" ? "large" : size;
 
   const variantClasses = {
-    primary: "bg-purple-600 hover:bg-purple-700 text-white",
-    secondary: "bg-gray-200 hover:bg-gray-300 text-gray-900 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-white",
+    primary: "bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white border border-white/10",
+    secondary: "bg-gradient-to-r from-gray-200 to-gray-100 hover:from-gray-300 hover:to-gray-200 text-gray-900 dark:bg-gradient-to-r dark:from-gray-700 dark:to-gray-800 dark:hover:from-gray-600 dark:hover:to-gray-700 dark:text-white border border-gray-300/20 dark:border-gray-600/30",
     outline: "bg-transparent border border-purple-600 text-purple-600 hover:bg-purple-50 dark:hover:bg-purple-900/20",
     ghost: "bg-transparent hover:bg-gray-100 text-gray-700 dark:hover:bg-gray-800 dark:text-gray-300",
     link: "bg-transparent text-purple-600 hover:underline dark:text-purple-400",
@@ -65,7 +65,7 @@ const Button = ({
     full: "rounded-full",
   };
 
-  const baseClasses = `inline-flex items-center justify-center font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 ${
+  const baseClasses = `inline-flex items-center justify-center font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 ${
     disabled || loading || isLoading ? "opacity-50 cursor-not-allowed" : ""
   } ${fullWidth ? "w-full" : ""} ${roundedClasses[rounded]} ${sizeClasses[normalizedSize]} ${variantClasses[variant]} ${className}`;
 

@@ -12,13 +12,28 @@ export const metadata: Metadata = {
 export default async function ProfilePage() {
   const user = await currentUser();
 
+  // Create a serializable user object with only the properties we need
+  const serializableUser = user ? {
+    id: user.id,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    emailAddresses: user.emailAddresses.map(email => ({
+      id: email.id,
+      emailAddress: email.emailAddress,
+      // Check if this is the primary email
+      isPrimary: user.primaryEmailAddressId === email.id
+    })),
+    imageUrl: user.imageUrl,
+    username: user.username
+  } : null;
+
   return (
     <div className="container mx-auto px-4 py-8">
       <SignedIn>
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">
           My Profile
         </h1>
-        <ProfileClient user={user} />
+        <ProfileClient user={serializableUser} />
       </SignedIn>
 
       <SignedOut>

@@ -37,7 +37,7 @@ const HeroSection = () => {
         </div>
         <div className="relative w-full md:w-1/2 h-64 md:h-96">
           <Image
-            src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
+            src="/hero-image.png"
             alt="Featured Product"
             fill
             className="object-contain"

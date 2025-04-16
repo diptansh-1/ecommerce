@@ -5,7 +5,67 @@ import { Product, User, Cart } from "@/types";
 const API_BASE_URL = "https://fakestoreapi.com";
 
 // Add a timeout and retry logic to axios requests
-axios.defaults.timeout = 10000; // 10 seconds timeout
+axios.defaults.timeout = 15000; // 15 seconds timeout
+
+// Fallback data for when API is unavailable
+const fallbackProducts: Product[] = [
+  {
+    id: 1,
+    title: "Fjallraven - Foldsack No. 1 Backpack",
+    price: 109.95,
+    description: "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
+    category: "men's clothing",
+    image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
+    rating: { rate: 3.9, count: 120 }
+  },
+  {
+    id: 2,
+    title: "Mens Casual Premium Slim Fit T-Shirts",
+    price: 22.3,
+    description: "Slim-fitting style, contrast raglan long sleeve, three-button henley placket, light weight & soft fabric for breathable and comfortable wearing.",
+    category: "men's clothing",
+    image: "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg",
+    rating: { rate: 4.1, count: 259 }
+  },
+  {
+    id: 3,
+    title: "Mens Cotton Jacket",
+    price: 55.99,
+    description: "Great outerwear jackets for Spring/Autumn/Winter, suitable for many occasions, such as working, hiking, camping, mountain/rock climbing, cycling, traveling or other outdoors.",
+    category: "men's clothing",
+    image: "https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg",
+    rating: { rate: 4.7, count: 500 }
+  },
+  {
+    id: 4,
+    title: "Womens T-Shirt",
+    price: 39.99,
+    description: "Lightweight perfection in a versatile t-shirt for women, ideal for casual outings or relaxed home wear.",
+    category: "women's clothing",
+    image: "https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_.jpg",
+    rating: { rate: 4.5, count: 430 }
+  },
+  {
+    id: 5,
+    title: "Wireless Earbuds",
+    price: 129.99,
+    description: "Premium wireless earbuds with noise cancellation and long battery life for immersive audio experiences.",
+    category: "electronics",
+    image: "https://fakestoreapi.com/img/81QpkIctqPL._AC_SX679_.jpg",
+    rating: { rate: 4.6, count: 320 }
+  },
+  {
+    id: 6,
+    title: "Gold Pendant Necklace",
+    price: 89.95,
+    description: "Elegant gold pendant necklace, perfect for special occasions or as a thoughtful gift.",
+    category: "jewelery",
+    image: "https://fakestoreapi.com/img/71YAIFU48IL._AC_UL640_QL65_ML3_.jpg",
+    rating: { rate: 4.3, count: 210 }
+  }
+];
+
+const fallbackCategories: string[] = ["electronics", "jewelery", "men's clothing", "women's clothing"];
 
 // Products API
 export const getProducts = async (): Promise<Product[]> => {
@@ -20,19 +80,9 @@ export const getProducts = async (): Promise<Product[]> => {
       if (retries === 0) {
         console.error("Error fetching products after multiple retries:", error);
 
-        // Return fallback data if available
-        try {
-          const cachedProducts = localStorage?.getItem("offline_products");
-          if (cachedProducts) {
-            console.log("Using cached products from localStorage");
-            return JSON.parse(cachedProducts);
-          }
-        } catch (e) {
-          console.error("Error accessing localStorage:", e);
-        }
-
-        // Return empty array as last resort
-        return [];
+        // Return fallback data
+        console.log("Using fallback products data");
+        return fallbackProducts;
       }
       console.log(`Retrying... ${retries} attempts left`);
       // Wait before retrying
@@ -54,19 +104,11 @@ export const getProduct = async (id: number): Promise<Product | null> => {
       if (retries === 0) {
         console.error(`Error fetching product with id ${id} after multiple retries:`, error);
 
-        // Try to get from localStorage
-        try {
-          const cachedProducts = localStorage?.getItem("offline_products");
-          if (cachedProducts) {
-            const products = JSON.parse(cachedProducts) as Product[];
-            const product = products.find(p => p.id === id);
-            if (product) {
-              console.log(`Using cached product ${id} from localStorage`);
-              return product;
-            }
-          }
-        } catch (e) {
-          console.error("Error accessing localStorage:", e);
+        // Try to get from fallback data
+        const product = fallbackProducts.find(p => p.id === id);
+        if (product) {
+          console.log(`Using fallback product ${id}`);
+          return product;
         }
 
         return null;
@@ -91,19 +133,11 @@ export const getProductsByCategory = async (category: string): Promise<Product[]
       if (retries === 0) {
         console.error(`Error fetching products in category ${category} after multiple retries:`, error);
 
-        // Try to get from localStorage
-        try {
-          const cachedProducts = localStorage?.getItem("offline_products");
-          if (cachedProducts) {
-            const products = JSON.parse(cachedProducts) as Product[];
-            const filteredProducts = products.filter(p => p.category === category);
-            if (filteredProducts.length > 0) {
-              console.log(`Using cached products for category ${category} from localStorage`);
-              return filteredProducts;
-            }
-          }
-        } catch (e) {
-          console.error("Error accessing localStorage:", e);
+        // Try to get from fallback data
+        const filteredProducts = fallbackProducts.filter(p => p.category === category);
+        if (filteredProducts.length > 0) {
+          console.log(`Using fallback products for category ${category}`);
+          return filteredProducts;
         }
 
         return [];
@@ -128,19 +162,9 @@ export const getCategories = async (): Promise<string[]> => {
       if (retries === 0) {
         console.error("Error fetching categories after multiple retries:", error);
 
-        // Return fallback data if available
-        try {
-          const cachedCategories = localStorage?.getItem("offline_categories");
-          if (cachedCategories) {
-            console.log("Using cached categories from localStorage");
-            return JSON.parse(cachedCategories);
-          }
-        } catch (e) {
-          console.error("Error accessing localStorage:", e);
-        }
-
-        // Return default categories as last resort
-        return ["electronics", "jewelery", "men's clothing", "women's clothing"];
+        // Return fallback categories
+        console.log("Using fallback categories");
+        return fallbackCategories;
       }
       console.log(`Retrying categories... ${retries} attempts left`);
       // Wait before retrying
@@ -195,34 +219,22 @@ export const getUserCart = async (userId: number): Promise<Cart[]> => {
 // Offline fallback data
 export const getOfflineProducts = async (): Promise<Product[]> => {
   try {
-    // Try to get from localStorage first
-    const cachedProducts = localStorage.getItem("offline_products");
-    if (cachedProducts) {
-      return JSON.parse(cachedProducts);
-    }
-
-    // If not in localStorage, fetch and cache
+    // Try to fetch products
     const products = await getProducts();
-    localStorage.setItem("offline_products", JSON.stringify(products));
     return products;
   } catch (error) {
     console.error("Error getting offline products:", error);
-    return [];
+    return fallbackProducts;
   }
 };
 
 export const getOfflineCategories = async (): Promise<string[]> => {
   try {
-    const cachedCategories = localStorage.getItem("offline_categories");
-    if (cachedCategories) {
-      return JSON.parse(cachedCategories);
-    }
-
+    // Try to fetch categories
     const categories = await getCategories();
-    localStorage.setItem("offline_categories", JSON.stringify(categories));
     return categories;
   } catch (error) {
     console.error("Error getting offline categories:", error);
-    return [];
+    return fallbackCategories;
   }
 };

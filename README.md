@@ -1,8 +1,8 @@
-# StyleShop E-Commerce Application
+# Shop E-Commerce Application
 
 ## Overview
 
-StyleShop is a sophisticated e-commerce web application built with Next.js, offering a premium shopping experience for users. The application features a visually stunning interface, advanced state management, data persistence, and a seamless checkout process.
+Shop is a sophisticated e-commerce web application built with Next.js, offering a premium shopping experience for users. The application features a visually stunning interface, advanced state management, data persistence, and a seamless checkout process.
 
 ## Features
 
@@ -77,8 +77,8 @@ MONGODB_URI=your_mongodb_uri
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/styleshop.git
-cd styleshop
+git clone https://github.com/yourusername/shop.git
+cd shop
 
 # Install dependencies
 npm install
@@ -88,6 +88,26 @@ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the application.
+
+### Quick Deployment
+
+This project is configured for easy deployment without strict type checking or linting:
+
+1. Update the environment variables in `.env.production` with your actual values
+2. Run the deployment command:
+
+```bash
+npm run deploy
+```
+
+#### Deploying to Vercel
+
+For the easiest deployment experience:
+
+1. Push your code to GitHub
+2. Import the repository in Vercel
+3. Set your environment variables in the Vercel dashboard
+4. Deploy!
 
 ## Project Structure
 

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { FiShoppingBag, FiStar, FiTruck } from "react-icons/fi";
 
 import { getProducts, getCategories } from "@/lib/api";
@@ -15,9 +16,17 @@ export default async function Home() {
   const featuredProducts = getRandomSubset(allProducts, 8);
   const categories = await getCategories();
 
-  return (
-    <HomeClient>
-      <div className="container mx-auto px-4 py-8">
+  // Category images (in a real app, these would come from the API or database)
+  const categoryImages = {
+    "electronics": "https://fakestoreapi.com/img/81QpkIctqPL._AC_SX679_.jpg",
+    "jewelery": "https://fakestoreapi.com/img/71YAIFU48IL._AC_UL640_QL65_ML3_.jpg",
+    "men's clothing": "https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg",
+    "women's clothing": "https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_.jpg",
+  };
+
+  // Create the content first
+  const content = (
+    <div className="container mx-auto px-4 py-8">
       {/* Hero Section */}
       <HeroSection />
 
@@ -75,9 +84,20 @@ export default async function Home() {
             <Link
               key={category}
               href={`/products?category=${category}`}
-              className="group relative h-40 rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-800"
+              className="group relative h-40 rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-800 shadow-sm hover:shadow-md transition-all duration-300"
             >
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent z-10"></div>
+
+              <div className="relative h-full w-full">
+                <Image
+                  src={categoryImages[category as keyof typeof categoryImages] || "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"}
+                  alt={category}
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className="object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+              </div>
+
               <div className="absolute bottom-0 left-0 p-4 z-20">
                 <h3 className="text-white font-medium capitalize">{category}</h3>
               </div>
@@ -91,7 +111,9 @@ export default async function Home() {
       <section>
         <NewsletterForm />
       </section>
-      </div>
-    </HomeClient>
+    </div>
   );
+
+  // Then pass it to the HomeClient component
+  return <HomeClient>{content}</HomeClient>;
 }

@@ -11,20 +11,21 @@ export const metadata = {
 export default async function ProductsPage({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   // Fetch products and categories
   const products = await getProducts();
   const categories = await getCategories();
-  
+
   // Get min and max prices for filter
   const prices = products.map((product) => product.price);
   const minPrice = Math.floor(Math.min(...prices));
   const maxPrice = Math.ceil(Math.max(...prices));
-  
-  // Get category from search params
-  const categoryParam = searchParams.category as string | undefined;
-  
+
+  // In Next.js 15, searchParams is a Promise that needs to be awaited
+  const resolvedParams = await searchParams;
+  const categoryParam = resolvedParams?.category as string | undefined;
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8">
@@ -35,7 +36,7 @@ export default async function ProductsPage({
           Browse our collection of high-quality products
         </p>
       </div>
-      
+
       <Suspense
         fallback={
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">

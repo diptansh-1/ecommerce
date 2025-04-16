@@ -71,18 +71,18 @@ const ProductQuickView = ({ product, isOpen, onClose }: ProductQuickViewProps) =
             leaveFrom="opacity-100 scale-100 translate-y-0"
             leaveTo="opacity-0 scale-95 translate-y-4"
           >
-            <div className="relative bg-white dark:bg-gray-900 rounded-lg shadow-xl max-w-3xl w-full mx-auto overflow-hidden">
+            <div className="relative bg-gradient-to-br from-white to-gray-50 dark:from-gray-900 dark:to-gray-900/90 rounded-2xl shadow-xl max-w-3xl w-full mx-auto overflow-hidden border border-gray-200/80 dark:border-gray-800/80 backdrop-blur-sm">
               <div className="absolute top-4 right-4 z-10">
                 <button
                   onClick={onClose}
-                  className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700"
+                  className="p-2.5 rounded-full bg-gradient-to-r from-gray-100 to-gray-50 dark:from-gray-800 dark:to-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200/50 dark:border-gray-700/50"
                 >
                   <FiX className="h-5 w-5" />
                 </button>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2">
-                <div className="relative h-80 md:h-full bg-gray-50 dark:bg-gray-800 flex items-center justify-center p-8">
+                <div className="relative h-80 md:h-full bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800/50 dark:to-gray-900/50 flex items-center justify-center p-8 border-r border-gray-200/50 dark:border-gray-700/50">
                   <Image
                     src={product.image}
                     alt={product.title}
@@ -93,15 +93,15 @@ const ProductQuickView = ({ product, isOpen, onClose }: ProductQuickViewProps) =
                 </div>
 
                 <div className="p-6 md:p-8 flex flex-col">
-                  <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1">
+                  <div className="inline-block px-4 py-2 bg-gradient-to-r from-gray-100 to-gray-50 dark:from-gray-800 dark:to-gray-800/70 rounded-lg text-xs font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wider mb-3 shadow-sm border border-gray-200/50 dark:border-gray-700/50">
                     {product.category}
                   </div>
 
-                  <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                  <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4 leading-tight">
                     {product.title}
                   </h2>
 
-                  <div className="flex items-center mb-4">
+                  <div className="inline-flex items-center mb-4 bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800/50 dark:to-gray-700/50 px-4 py-2 rounded-full shadow-sm border border-gray-200/50 dark:border-gray-700/50">
                     <div className="flex items-center text-yellow-400">
                       {Array.from({ length: 5 }).map((_, i) => (
                         <span key={i}>
@@ -109,12 +109,12 @@ const ProductQuickView = ({ product, isOpen, onClose }: ProductQuickViewProps) =
                         </span>
                       ))}
                     </div>
-                    <span className="ml-2 text-sm text-gray-600 dark:text-gray-400">
-                      ({product.rating.count} reviews)
+                    <span className="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+                      {product.rating.rate} <span className="text-gray-400 dark:text-gray-500">({product.rating.count} reviews)</span>
                     </span>
                   </div>
 
-                  <div className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+                  <div className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent dark:from-purple-400 dark:to-blue-400 mb-5">
                     {formatPrice(product.price)}
                   </div>
 
@@ -123,21 +123,21 @@ const ProductQuickView = ({ product, isOpen, onClose }: ProductQuickViewProps) =
                   </p>
 
                   <div className="flex items-center mb-6">
-                    <span className="text-gray-700 dark:text-gray-300 mr-4">Quantity:</span>
-                    <div className="flex items-center border border-gray-300 dark:border-gray-700 rounded-full">
+                    <span className="text-gray-700 dark:text-gray-300 mr-4 font-medium">Quantity:</span>
+                    <div className="flex items-center bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800/30 dark:to-gray-700/30 p-1 rounded-full shadow-sm border border-gray-200/50 dark:border-gray-700/50">
                       <button
                         onClick={decreaseQuantity}
-                        className="p-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                        className="p-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white disabled:opacity-50 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full transition-colors duration-200"
                         disabled={quantity <= 1}
                       >
                         <FiMinus className="h-4 w-4" />
                       </button>
-                      <span className="w-10 text-center text-gray-900 dark:text-white">
+                      <span className="w-12 text-center text-gray-900 dark:text-white font-medium">
                         {quantity}
                       </span>
                       <button
                         onClick={increaseQuantity}
-                        className="p-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                        className="p-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full transition-colors duration-200"
                       >
                         <FiPlus className="h-4 w-4" />
                       </button>
@@ -147,7 +147,7 @@ const ProductQuickView = ({ product, isOpen, onClose }: ProductQuickViewProps) =
                   <div className="flex flex-col sm:flex-row gap-4 mt-auto">
                     <Button
                       variant="primary"
-                      className="flex-1"
+                      className="flex-1 shadow-md hover:shadow-purple-500/30 transition-all duration-300 py-2.5 rounded-xl"
                       leftIcon={<FiShoppingCart className="h-5 w-5" />}
                       onClick={handleAddToCart}
                     >
