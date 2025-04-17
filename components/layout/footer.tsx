@@ -17,7 +17,7 @@ const Footer = () => {
               className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent flex items-center"
             >
               <span className="mr-2 bg-gradient-to-br from-purple-600 to-blue-500 p-2 rounded-xl text-white shadow-md flex items-center justify-center w-9 h-9 border border-white/20">S</span>
-              StyleShop
+              Shop
             </Link>
             <p className="mt-4 text-sm text-gray-600 dark:text-gray-400">
               A sophisticated e-commerce web application offering a premium shopping experience.
@@ -104,7 +104,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  href="/profile/orders"
+                  href="/profile?tab=orders"
                   className="text-sm text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400"
                 >
                   Order History
@@ -153,7 +153,7 @@ const Footer = () => {
 
         <div className="mt-12 border-t border-gray-200 dark:border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center bg-gradient-to-r from-gray-50/50 to-white/50 dark:from-gray-900/50 dark:to-gray-800/50 p-4 rounded-xl">
           <p className="text-sm text-gray-600 dark:text-gray-400">
-            &copy; {currentYear} StyleShop. All rights reserved.
+            &copy; {currentYear} Shop. All rights reserved.
           </p>
           <div className="mt-4 md:mt-0 flex space-x-6">
             <Link

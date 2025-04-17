@@ -75,15 +75,15 @@ const ProductCard = ({ product, onQuickView }: ProductCardProps) => {
       transition={{ duration: 0.3 }}
       className={`group relative rounded-2xl overflow-hidden bg-white dark:bg-gray-800 shadow-sm hover:shadow-xl transition-all duration-300 ${
         isDragging ? "opacity-50 scale-95 ring-2 ring-purple-500" : ""
-      } border border-gray-100 dark:border-gray-700 hover:border-purple-200 dark:hover:border-purple-800/30 hover:translate-y-[-4px] backdrop-blur-sm`}
+      } border border-gray-200 dark:border-gray-700 hover:border-purple-300 dark:hover:border-purple-800/30 hover:translate-y-[-4px] backdrop-blur-sm`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       style={{ cursor: isDragging ? "grabbing" : "grab" }}
     >
       <Link href={`/products/${product.id}`} className="block">
-        <div className="relative aspect-square overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900/50 dark:to-gray-800/50 p-4">
-          <div className="absolute top-2 right-2 z-10">
-            <span className="bg-gradient-to-r from-purple-100 to-indigo-100 dark:from-purple-900/30 dark:to-indigo-900/30 text-purple-800 dark:text-purple-300 text-xs px-3 py-1.5 rounded-full font-medium backdrop-blur-sm shadow-sm">
+        <div className="relative aspect-square overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900/50 dark:to-gray-800/50 p-4 border-b border-gray-100 dark:border-gray-700">
+          <div className="absolute top-2 right-2 z-20">
+            <span className="bg-gradient-to-r from-purple-200 to-indigo-200 dark:from-purple-800 dark:to-indigo-800 text-purple-900 dark:text-purple-100 text-xs px-3 py-1.5 rounded-full font-medium shadow-md border border-purple-300/50 dark:border-purple-600/50">
               {product.rating.rate >= 4.5 ? "Top Rated" : product.rating.rate >= 4 ? "Popular" : ""}
             </span>
           </div>
@@ -101,14 +101,14 @@ const ProductCard = ({ product, onQuickView }: ProductCardProps) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: isHovered ? 1 : 0 }}
             transition={{ duration: 0.2 }}
-            className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/50 to-transparent flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-[2px]"
+            className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/50 to-transparent flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-[2px] z-10"
           >
             <div className="flex space-x-2">
               <motion.button
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={handleQuickView}
-                className="p-3 bg-white/90 dark:bg-gray-800/90 rounded-full text-gray-700 dark:text-gray-200 hover:text-purple-600 dark:hover:text-purple-400 shadow-md hover:shadow-lg transition-all duration-200 backdrop-blur-sm"
+                className="p-3 bg-white/90 dark:bg-gray-800/90 rounded-full text-gray-700 dark:text-gray-200 hover:text-purple-600 dark:hover:text-purple-400 shadow-md hover:shadow-lg transition-all duration-200 backdrop-blur-sm border border-white/20 dark:border-gray-700/30"
                 aria-label="Quick view"
               >
                 <FiEye className="h-5 w-5" />
@@ -118,7 +118,7 @@ const ProductCard = ({ product, onQuickView }: ProductCardProps) => {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={handleAddToWishlist}
-                className={`p-2 bg-white dark:bg-gray-800 rounded-full ${
+                className={`p-2 bg-white/90 dark:bg-gray-800/90 rounded-full shadow-md border border-white/20 dark:border-gray-700/30 ${
                   inWishlist
                     ? "text-red-500"
                     : "text-gray-700 dark:text-gray-200 hover:text-red-500"
@@ -132,7 +132,7 @@ const ProductCard = ({ product, onQuickView }: ProductCardProps) => {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={handleAddToCart}
-                className="p-2 bg-white dark:bg-gray-800 rounded-full text-gray-700 dark:text-gray-200 hover:text-purple-600 dark:hover:text-purple-400"
+                className="p-2 bg-white/90 dark:bg-gray-800/90 rounded-full text-gray-700 dark:text-gray-200 hover:text-purple-600 dark:hover:text-purple-400 shadow-md border border-white/20 dark:border-gray-700/30"
                 aria-label="Add to cart"
               >
                 <FiShoppingCart className="h-5 w-5" />
@@ -142,20 +142,20 @@ const ProductCard = ({ product, onQuickView }: ProductCardProps) => {
         </div>
 
         <div className="p-5">
-          <div className="inline-block px-3 py-1.5 bg-gradient-to-r from-gray-100 to-gray-50 dark:from-gray-800 dark:to-gray-800/70 rounded-lg text-xs font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wider mb-3 shadow-sm">
+          <div className="inline-block px-3 py-1.5 bg-gradient-to-r from-gray-100 to-gray-50 dark:from-gray-800 dark:to-gray-800/70 rounded-lg text-xs font-medium text-gray-700 dark:text-gray-400 uppercase tracking-wider mb-3 shadow-sm border border-gray-200 dark:border-gray-700">
             {product.category}
           </div>
-          <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-3 text-lg leading-tight">
+          <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-3 text-lg leading-tight hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
             {truncateText(product.title, 40)}
           </h3>
           <div className="flex items-center justify-between mb-2">
-            <span className="text-xl font-bold bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent dark:from-purple-400 dark:to-blue-400">
+            <span className="text-xl font-bold bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent dark:from-purple-400 dark:to-blue-400 px-3 py-1 rounded-lg bg-purple-50 dark:bg-purple-900/20 border border-purple-100 dark:border-purple-800/30">
               {formatPrice(product.price)}
             </span>
-            <div className="flex items-center bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800/50 dark:to-gray-700/50 px-3 py-1.5 rounded-full shadow-inner">
-              <span className="text-yellow-400 mr-1">★</span>
+            <div className="flex items-center bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800/50 dark:to-gray-700/50 px-3 py-1.5 rounded-full shadow-inner border border-gray-200 dark:border-gray-700">
+              <span className="text-yellow-500 dark:text-yellow-400 mr-1 text-lg">★</span>
               <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                {product.rating.rate} <span className="text-gray-400 dark:text-gray-500">({product.rating.count})</span>
+                {product.rating.rate} <span className="text-gray-500 dark:text-gray-500">({product.rating.count})</span>
               </span>
             </div>
           </div>
@@ -166,7 +166,7 @@ const ProductCard = ({ product, onQuickView }: ProductCardProps) => {
         <Button
           variant="primary"
           size="sm"
-          className="w-full rounded-xl shadow-md hover:shadow-purple-500/30 transition-all duration-300 py-2.5"
+          className="w-full rounded-xl shadow-md hover:shadow-purple-500/30 transition-all duration-300 py-2.5 font-medium"
           leftIcon={<FiShoppingCart className="h-4 w-4" />}
           onClick={handleAddToCart}
         >
@@ -175,8 +175,8 @@ const ProductCard = ({ product, onQuickView }: ProductCardProps) => {
       </div>
 
       {/* Drag hint */}
-      <div className="absolute top-3 left-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white text-xs px-3 py-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity shadow-lg backdrop-blur-sm border border-white/20">
-        <span className="flex items-center">Drag to cart <FiShoppingCart className="ml-1 h-3 w-3" /></span>
+      <div className="absolute top-3 left-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white text-xs px-3 py-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity shadow-lg border border-white/20 z-20">
+        <span className="flex items-center font-medium">Drag to cart <FiShoppingCart className="ml-1 h-3 w-3" /></span>
       </div>
     </motion.div>
   );

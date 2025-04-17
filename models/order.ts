@@ -13,14 +13,23 @@ export interface IOrder extends Document {
   items: IOrderItem[];
   totalAmount: number;
   shippingAddress: {
-    street: string;
+    firstName: string;
+    lastName: string;
+    address: string;
     city: string;
     state: string;
     zipCode: string;
     country: string;
+    email: string;
+    phone: string;
   };
   status: 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
-  paymentMethod: string;
+  paymentMethod: {
+    type: string;
+    cardName: string;
+    cardNumberLast4: string;
+    expiryDate: string;
+  };
   paymentStatus: 'pending' | 'paid' | 'failed';
 }
 
@@ -35,22 +44,31 @@ const OrderSchema: Schema = new Schema({
   }],
   totalAmount: { type: Number, required: true },
   shippingAddress: {
-    street: { type: String, required: true },
+    firstName: { type: String, required: true },
+    lastName: { type: String, required: true },
+    address: { type: String, required: true },
     city: { type: String, required: true },
     state: { type: String, required: true },
     zipCode: { type: String, required: true },
-    country: { type: String, required: true }
+    country: { type: String, required: true },
+    email: { type: String, required: true },
+    phone: { type: String, required: true }
   },
-  status: { 
-    type: String, 
-    required: true, 
+  status: {
+    type: String,
+    required: true,
     enum: ['pending', 'processing', 'shipped', 'delivered', 'cancelled'],
     default: 'pending'
   },
-  paymentMethod: { type: String, required: true },
-  paymentStatus: { 
-    type: String, 
-    required: true, 
+  paymentMethod: {
+    type: { type: String, required: true },
+    cardName: { type: String, required: true },
+    cardNumberLast4: { type: String, required: true },
+    expiryDate: { type: String, required: true }
+  },
+  paymentStatus: {
+    type: String,
+    required: true,
     enum: ['pending', 'paid', 'failed'],
     default: 'pending'
   }

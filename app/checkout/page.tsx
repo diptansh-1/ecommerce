@@ -4,7 +4,7 @@ import CheckoutClient from "./checkout-client";
 import SignInRedirect from "@/components/auth/sign-in-redirect";
 
 export const metadata: Metadata = {
-  title: "Checkout | StyleShop",
+  title: "Checkout | Shop",
   description: "Complete your purchase",
 };
 

@@ -4,7 +4,7 @@ import ProductsClient from "./products-client";
 import { ProductCardSkeleton } from "@/components/ui/skeleton";
 
 export const metadata = {
-  title: "Products | StyleShop",
+  title: "Products | Shop",
   description: "Browse our collection of high-quality products",
 };
 
@@ -28,7 +28,7 @@ export default async function ProductsPage({
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="mb-8">
+      <div className="mb-8 bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
           {categoryParam ? `${categoryParam.charAt(0).toUpperCase() + categoryParam.slice(1)}` : "All Products"}
         </h1>

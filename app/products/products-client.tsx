@@ -159,18 +159,39 @@ const ProductsClient = ({
         </div>
 
         <div className="flex-1">
-          <div className="mb-6 flex justify-between items-center">
-            <p className="text-gray-600 dark:text-gray-400">
-              Showing {filteredProducts.length} products
-            </p>
+          <div className="mb-6 flex flex-col sm:flex-row justify-between items-center gap-4 bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
+            <div className="flex flex-col sm:flex-row items-center gap-4 w-full">
+              <p className="text-gray-700 dark:text-gray-300 font-medium bg-gray-50 dark:bg-gray-700/50 px-4 py-2 rounded-lg">
+                Showing <span className="font-bold text-purple-600 dark:text-purple-400">{filteredProducts.length}</span> products
+              </p>
 
-            <div className="relative">
+              {/* Sort dropdown - always accessible */}
+              <div className="relative w-full sm:w-auto">
+                <select
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value as any)}
+                  className="px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500 shadow-sm appearance-none pr-8 cursor-pointer"
+                >
+                  <option value="default">Sort by: Default</option>
+                  <option value="price-low-high">Price: Low to High</option>
+                  <option value="price-high-low">Price: High to Low</option>
+                  <option value="rating">Rating</option>
+                </select>
+                <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none text-gray-500 dark:text-gray-400">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <div className="relative w-full sm:w-auto">
               <input
                 type="text"
                 placeholder="Search products..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="px-4 py-2 rounded-full border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500 w-full md:w-64"
+                className="px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500 w-full md:w-64 shadow-inner"
               />
             </div>
           </div>
@@ -178,16 +199,34 @@ const ProductsClient = ({
           <ProductGrid products={filteredProducts} isLoading={isLoading} />
 
           {filteredProducts.length === 0 && !isLoading && (
-            <div className="text-center py-12">
-              <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+            <div className="text-center py-12 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 p-8">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-full mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-gray-500 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-medium text-gray-900 dark:text-white mb-2">
                 No products found
               </h3>
-              <p className="text-gray-600 dark:text-gray-400">
-                Try adjusting your filters or search query
+              <p className="text-gray-600 dark:text-gray-400 max-w-md mx-auto">
+                Try adjusting your filters or search query to find what you're looking for
               </p>
             </div>
           )}
         </div>
+      </div>
+
+      {/* Floating filter button for mobile */}
+      <div className="md:hidden fixed bottom-20 right-4 z-40">
+        <button
+          onClick={() => document.getElementById('mobile-filter-button')?.click()}
+          className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white p-4 rounded-full shadow-lg flex items-center justify-center border border-white/10"
+          aria-label="Open filters"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+          </svg>
+        </button>
       </div>
 
       <DroppableCart />

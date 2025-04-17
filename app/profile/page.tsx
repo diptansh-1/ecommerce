@@ -5,7 +5,7 @@ import ProfileClient from "./profile-client";
 import SignInRedirect from "@/components/auth/sign-in-redirect";
 
 export const metadata: Metadata = {
-  title: "My Profile | StyleShop",
+  title: "My Profile | Shop",
   description: "Manage your account and view your order history",
 };
 

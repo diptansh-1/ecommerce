@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import CartClient from "./cart-client";
 
 export const metadata: Metadata = {
-  title: "Shopping Cart | StyleShop",
+  title: "Shopping Cart | Shop",
   description: "View and manage your shopping cart",
 };
 
@@ -12,7 +12,7 @@ export default function CartPage() {
       <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">
         Shopping Cart
       </h1>
-      
+
       <CartClient />
     </div>
   );

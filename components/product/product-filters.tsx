@@ -60,6 +60,7 @@ const ProductFilters = ({
       {/* Mobile filter button */}
       <div className="md:hidden mb-4">
         <Button
+          id="mobile-filter-button"
           variant="outline"
           leftIcon={<FiFilter className="h-4 w-4" />}
           onClick={() => setIsMobileFiltersOpen(true)}
@@ -70,7 +71,7 @@ const ProductFilters = ({
 
       {/* Desktop filters */}
       <div className="hidden md:block sticky top-24 h-fit">
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 border border-gray-100 dark:border-gray-700">
           <div className="flex justify-between items-center mb-6">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
               Filters
@@ -88,7 +89,7 @@ const ProductFilters = ({
           {/* Categories */}
           <div className="mb-6">
             <button
-              className="flex justify-between items-center w-full text-left font-medium text-gray-900 dark:text-white mb-2"
+              className="flex justify-between items-center w-full text-left font-medium text-gray-900 dark:text-white mb-2 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
               onClick={() => toggleSection("categories")}
             >
               Categories
@@ -140,7 +141,7 @@ const ProductFilters = ({
           {/* Price Range */}
           <div className="mb-6">
             <button
-              className="flex justify-between items-center w-full text-left font-medium text-gray-900 dark:text-white mb-2"
+              className="flex justify-between items-center w-full text-left font-medium text-gray-900 dark:text-white mb-2 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
               onClick={() => toggleSection("price")}
             >
               Price Range
@@ -231,7 +232,7 @@ const ProductFilters = ({
           {/* Sort By */}
           <div>
             <button
-              className="flex justify-between items-center w-full text-left font-medium text-gray-900 dark:text-white mb-2"
+              className="flex justify-between items-center w-full text-left font-medium text-gray-900 dark:text-white mb-2 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
               onClick={() => toggleSection("sort")}
             >
               Sort By
@@ -259,10 +260,10 @@ const ProductFilters = ({
                     ].map((option) => (
                       <div
                         key={option.value}
-                        className={`flex items-center cursor-pointer ${
+                        className={`flex items-center cursor-pointer p-2 rounded-lg ${
                           sortBy === option.value
-                            ? "text-purple-600 dark:text-purple-400"
-                            : "text-gray-600 dark:text-gray-400"
+                            ? "bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-medium"
+                            : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
                         }`}
                         onClick={() => setSortBy(option.value as any)}
                       >
@@ -287,13 +288,13 @@ const ProductFilters = ({
             className="fixed inset-0 z-50 overflow-hidden"
           >
             <div className="absolute inset-0 bg-black/40" onClick={() => setIsMobileFiltersOpen(false)} />
-            
+
             <motion.div
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 25 }}
-              className="absolute right-0 top-0 h-full w-80 bg-white dark:bg-gray-900 shadow-xl overflow-y-auto"
+              className="absolute right-0 top-0 h-full w-80 bg-white dark:bg-gray-900 shadow-xl overflow-y-auto border-l border-gray-100 dark:border-gray-700"
             >
               <div className="p-6">
                 <div className="flex justify-between items-center mb-6">
@@ -425,10 +426,10 @@ const ProductFilters = ({
                     ].map((option) => (
                       <div
                         key={option.value}
-                        className={`flex items-center cursor-pointer ${
+                        className={`flex items-center cursor-pointer p-2 rounded-lg ${
                           sortBy === option.value
-                            ? "text-purple-600 dark:text-purple-400"
-                            : "text-gray-600 dark:text-gray-400"
+                            ? "bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-medium"
+                            : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
                         }`}
                         onClick={() => setSortBy(option.value as any)}
                       >

@@ -34,7 +34,7 @@ export default function RootLayout({
       <html lang="en" suppressHydrationWarning>
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
           {/* Clerk authentication is handled in the Header component */}
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
             <DndProviderWrapper>
               <div className="flex min-h-screen flex-col">
                 <Header />

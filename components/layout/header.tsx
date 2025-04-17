@@ -47,7 +47,7 @@ const Header = () => {
           className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent flex items-center"
         >
           <span className="mr-2 bg-gradient-to-br from-purple-600 to-blue-500 p-2 rounded-xl text-white shadow-md flex items-center justify-center w-9 h-9 border border-white/20">S</span>
-          StyleShop
+          Shop
         </Link>
 
         {/* Desktop Navigation */}

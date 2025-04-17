@@ -6,7 +6,7 @@ import { FiSun, FiMoon } from "react-icons/fi";
 import { motion } from "framer-motion";
 
 const ThemeToggle = () => {
-  const { theme, setTheme } = useTheme();
+  const { resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   // Avoid hydration mismatch
@@ -18,14 +18,16 @@ const ThemeToggle = () => {
     return <div className="w-9 h-9"></div>;
   }
 
+  const isDark = resolvedTheme === "dark";
+
   return (
     <motion.button
       whileTap={{ scale: 0.9 }}
-      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+      onClick={() => setTheme(isDark ? "light" : "dark")}
       className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none"
       aria-label="Toggle theme"
     >
-      {theme === "dark" ? (
+      {isDark ? (
         <motion.div
           initial={{ rotate: -45, opacity: 0 }}
           animate={{ rotate: 0, opacity: 1 }}

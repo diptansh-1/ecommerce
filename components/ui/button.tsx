@@ -47,11 +47,11 @@ const Button = ({
   const normalizedSize = size === "sm" ? "small" : size === "md" ? "medium" : size === "lg" ? "large" : size;
 
   const variantClasses = {
-    primary: "bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white border border-white/10",
-    secondary: "bg-gradient-to-r from-gray-200 to-gray-100 hover:from-gray-300 hover:to-gray-200 text-gray-900 dark:bg-gradient-to-r dark:from-gray-700 dark:to-gray-800 dark:hover:from-gray-600 dark:hover:to-gray-700 dark:text-white border border-gray-300/20 dark:border-gray-600/30",
-    outline: "bg-transparent border border-purple-600 text-purple-600 hover:bg-purple-50 dark:hover:bg-purple-900/20",
-    ghost: "bg-transparent hover:bg-gray-100 text-gray-700 dark:hover:bg-gray-800 dark:text-gray-300",
-    link: "bg-transparent text-purple-600 hover:underline dark:text-purple-400",
+    primary: "bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white border border-white/10 shadow-md hover:shadow-lg hover:shadow-purple-500/20",
+    secondary: "bg-gradient-to-r from-gray-200 to-gray-100 hover:from-gray-300 hover:to-gray-200 text-gray-900 dark:bg-gradient-to-r dark:from-gray-700 dark:to-gray-800 dark:hover:from-gray-600 dark:hover:to-gray-700 dark:text-white border border-gray-300/20 dark:border-gray-600/30 shadow-sm hover:shadow-md",
+    outline: "bg-transparent border border-purple-600 text-purple-600 hover:bg-purple-50 dark:hover:bg-purple-900/20 hover:border-purple-700 dark:hover:border-purple-500",
+    ghost: "bg-transparent hover:bg-gray-100 text-gray-700 dark:hover:bg-gray-800 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400",
+    link: "bg-transparent text-purple-600 hover:underline dark:text-purple-400 font-medium",
   };
 
   const sizeClasses = {

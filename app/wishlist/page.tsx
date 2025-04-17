@@ -4,7 +4,7 @@ import WishlistClient from "./wishlist-client";
 import SignInRedirect from "@/components/auth/sign-in-redirect";
 
 export const metadata: Metadata = {
-  title: "Wishlist | StyleShop",
+  title: "Wishlist | Shop",
   description: "View and manage your wishlist",
 };
 
