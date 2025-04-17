@@ -35,7 +35,7 @@ const ProductFilters = ({
     resetFilters,
   } = useFilterStore();
 
-  // Initialize price range when component mounts
+
   useEffect(() => {
     if (priceRange[0] === 0 && priceRange[1] === 1000) {
       setPriceRange([minPrice, maxPrice]);

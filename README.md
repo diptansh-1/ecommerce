@@ -130,6 +130,33 @@ For the easiest deployment experience:
 └── types/                # TypeScript type definitions
 ```
 
+## Technical Decisions and Architecture
+
+### Frontend Architecture
+- **Next.js 15**: Utilizing the latest Next.js features including App Router for improved routing and server components
+- **TypeScript**: Type-safe code to reduce bugs and improve developer experience
+- **Tailwind CSS v4**: Utility-first CSS framework for rapid UI development with the latest features
+- **Component Structure**: Modular component architecture for reusability and maintainability
+
+### State Management
+- **Zustand**: Chosen for its simplicity and performance compared to Redux or Context API for global state
+- **React Context**: Used specifically for theme management with next-themes
+- **Local Storage**: Implemented for persistent cart and user preferences across sessions
+
+### Authentication
+- **Clerk**: Selected for its modern authentication features, ease of integration, and security benefits
+- **Custom Middleware**: Implemented to protect routes and API endpoints while maintaining flexibility
+
+### Data Fetching Strategy
+- **Server Components**: Leveraging Next.js server components for data fetching to reduce client-side JavaScript
+- **API Routes**: Custom API routes for server-side operations and data manipulation
+- **MongoDB**: NoSQL database chosen for flexibility in schema design and scalability
+
+### Performance Considerations
+- **Image Optimization**: Using Next.js Image component for automatic image optimization
+- **Code Splitting**: Automatic code splitting for faster page loads and better user experience
+- **Incremental Static Regeneration**: Implemented for product pages to balance fresh content and performance
+
 ## API Integration
 
 The application uses the following public API endpoints from FakeStoreAPI:
@@ -137,6 +164,36 @@ The application uses the following public API endpoints from FakeStoreAPI:
 - Products: https://fakestoreapi.com/products
 - Carts: https://fakestoreapi.com/carts
 - Users: https://fakestoreapi.com/users
+
+## Challenges Faced and Solutions
+
+### Challenge 1: Authentication Integration
+**Problem**: Integrating Clerk authentication with Next.js 15 and ensuring it works with API routes.
+
+**Solution**: Used the correct import paths (`@clerk/nextjs/server` instead of `@clerk/nextjs`) and implemented proper middleware configuration to handle authentication across the application.
+
+### Challenge 2: Dark/Light Mode Implementation
+**Problem**: The dark/light mode toggle wasn't working correctly due to conflicts between CSS variables and the next-themes library.
+
+**Solution**: Refactored the CSS variables to use class-based theming instead of media queries, and updated the theme provider configuration to use the 'class' attribute for theme switching.
+
+### Challenge 3: Order Management
+**Problem**: Creating and displaying orders was challenging due to authentication issues with the API routes.
+
+**Solution**: Implemented a fallback mechanism using localStorage to store orders when the database connection fails, ensuring users can still see their order history even if there are backend issues.
+
+### Challenge 4: Dependency Conflicts
+**Problem**: Deployment to Vercel faced peer dependency conflicts between React 19 and packages requiring React 18.
+
+**Solution**: Implemented multiple strategies to bypass these conflicts:
+- Added an `.npmrc` file with legacy-peer-deps=true
+- Updated package.json with resolutions for React
+- Modified vercel.json to use the --legacy-peer-deps flag during installation
+
+### Challenge 5: Responsive Design
+**Problem**: Creating a consistent user experience across different device sizes.
+
+**Solution**: Used Tailwind CSS's responsive utilities and implemented custom breakpoints where needed. Created device-specific layouts for certain components like the product filters.
 
 ## License
 

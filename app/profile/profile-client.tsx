@@ -88,13 +88,13 @@ const ProfileClient = ({ user }: ProfileClientProps) => {
     setError(null);
 
     try {
-      // Get orders from localStorage instead of API
+
       setTimeout(() => {
         try {
           const storedOrders = JSON.parse(localStorage.getItem('orders') || '[]');
 
           if (storedOrders.length === 0) {
-            // If no orders in localStorage, create a mock order for demo
+
             const mockOrder = {
               _id: 'mock123456789',
               userId: 'current_user',
@@ -142,7 +142,7 @@ const ProfileClient = ({ user }: ProfileClientProps) => {
           setError('Failed to load your order history. Please try again.');
           setIsLoading(false);
         }
-      }, 1000); // Simulate network delay
+      }, 1000);
     } catch (err) {
       console.error('Error fetching orders:', err);
       setError('Failed to load your order history. Please try again.');

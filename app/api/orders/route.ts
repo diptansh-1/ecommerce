@@ -4,7 +4,7 @@ import connectToDatabase from "@/lib/db";
 import Order from "@/models/order";
 import User from "@/models/user";
 
-// Helper function to check authentication
+
 function getAuthUserId() {
   try {
     const { userId } = auth();
@@ -29,10 +29,10 @@ export async function GET(request: NextRequest) {
     try {
       await connectToDatabase();
 
-      // Find orders for the user
+
       const orders = await Order.find({ userId }).sort({ createdAt: -1 });
 
-      // If no orders found, return a mock order for testing
+
       if (orders.length === 0) {
         const mockOrder = {
           _id: 'mock123456789',
@@ -77,7 +77,7 @@ export async function GET(request: NextRequest) {
     } catch (dbError) {
       console.error("Database error:", dbError);
 
-      // Return a mock order if database connection fails
+
       const mockOrder = {
         _id: 'mock123456789',
         userId: userId,
@@ -148,7 +148,7 @@ export async function POST(request: NextRequest) {
     try {
       await connectToDatabase();
 
-      // Create new order
+
       const order = new Order({
         userId,
         items: orderData.items,
@@ -156,12 +156,12 @@ export async function POST(request: NextRequest) {
         shippingAddress: orderData.shippingAddress,
         status: "pending",
         paymentMethod: orderData.paymentMethod,
-        paymentStatus: "paid", // Set to paid since we're simulating a successful payment
+        paymentStatus: "paid",
       });
 
       await order.save();
 
-      // Add order to user's orders if the User model exists
+
       try {
         await User.findOneAndUpdate(
           { clerkId: userId },
@@ -169,15 +169,15 @@ export async function POST(request: NextRequest) {
           { upsert: true }
         );
       } catch (userError) {
-        console.log("User model might not exist, but order was created:", userError);
-        // Continue even if this fails - the order is still created
+        console.error("User model error:", userError);
+
       }
 
       return NextResponse.json(order, { status: 201 });
     } catch (dbError) {
       console.error("Database error:", dbError);
 
-      // Create a mock order response for testing
+
       const mockOrder = {
         _id: 'mock' + Date.now(),
         userId: userId,

@@ -76,17 +76,14 @@ const CheckoutClient = () => {
     setIsSubmitting(true);
 
     try {
-      // For simplicity, we'll just simulate a successful order
-      // without actually making the API call that's causing issues
-
       // Simulate API delay
       await new Promise(resolve => setTimeout(resolve, 1500));
 
-      // Clear cart and show confirmation
+
       clearCart();
       setOrderComplete(true);
 
-      // Store order in localStorage for demo purposes
+
       const orderData = {
         _id: 'order_' + Date.now(),
         userId: 'current_user',
@@ -121,7 +118,7 @@ const CheckoutClient = () => {
         updatedAt: new Date().toISOString()
       };
 
-      // Store in localStorage
+
       const existingOrders = JSON.parse(localStorage.getItem('orders') || '[]');
       existingOrders.push(orderData);
       localStorage.setItem('orders', JSON.stringify(existingOrders));
@@ -166,7 +163,7 @@ const CheckoutClient = () => {
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
       <div className="lg:col-span-2">
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-8">
-          {/* Checkout Steps */}
+
           <div className="flex mb-8">
             {steps.map((step, index) => (
               <div key={step.id} className="flex-1">
@@ -210,7 +207,7 @@ const CheckoutClient = () => {
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)}>
-            {/* Shipping Information */}
+
             {currentStep === 0 && (
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
@@ -397,7 +394,7 @@ const CheckoutClient = () => {
               </motion.div>
             )}
 
-            {/* Payment Information */}
+
             {currentStep === 1 && (
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
@@ -507,7 +504,7 @@ const CheckoutClient = () => {
               </motion.div>
             )}
 
-            {/* Order Review */}
+
             {currentStep === 2 && (
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
